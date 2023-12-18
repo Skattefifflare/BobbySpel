@@ -49,7 +49,7 @@ namespace BobbySpel {
             pixel = new Texture2D(GraphicsDevice, 1, 1);
             bobby = new Bobby(new Vector2(350, 200));
             block1 = new Block(new Vector2(200, 60), "Block.png");
-            block2 = new Block(new Vector2(450, 40), "Block.png");
+            block2 = new Block(new Vector2(150, referenceHeight-100), "Block.png");
             longblock = new Block(new Vector2(0, referenceHeight - 20), "LongBlock.png");
             
         }
