@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 namespace BobbySpel {
     internal class Block : CollidableObject {
 
-        public Block(Vector2 Aanchorposition) {
+        public Block(Vector2 Aanchorposition, string filepath) {
             objectanchor = new Anchor(Aanchorposition);
 
-            spritelist = new List<Texture2D> { Texture2D.FromFile(graphicsDevice, "Block.png") };
+            spritelist = new List<Texture2D> { Texture2D.FromFile(graphicsDevice, $"{filepath}") };
             currentsprite = spritelist[0];
 
             offsetlist = new List<(int, int)> { (0, 0) };

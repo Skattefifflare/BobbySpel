@@ -10,11 +10,7 @@ using System.Threading.Tasks;
 namespace BobbySpel {
     internal class SpriteObject {
 
-
-
         public static GraphicsDevice graphicsDevice = Game1.gd;
-
-
 
         public List<Texture2D> spritelist;
         public Texture2D currentsprite;
@@ -57,7 +53,6 @@ namespace BobbySpel {
             }
             int index = (int)Math.Floor((spritetimer / interval)) + spriteliststart;
             currentsprite = spritelist[index];
-
         }
 
         // alla sprites loopas

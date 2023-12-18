@@ -39,9 +39,10 @@ namespace BobbySpel {
                 // Spring
                 else if (ydif == 0) {
                     ResolveX();
+                    obj1.isFalling = true;
                 }
 
-                // left1 < right2 && left2 < right1
+                
                 else if (obj1.objectanchor.oldanchor.X + obj1.offsetlist[obj1.prevspriteindex].Item1 < obj2.objectanchor.anchor.X + obj2.objecthitbox.hitbox.Width && 
                     obj2.objectanchor.anchor.X < obj1.objectanchor.oldanchor.X + obj1.objecthitbox.hitbox.Width + (obj1.offsetlist[obj1.spritelist.IndexOf(obj1.currentsprite)].Item1 - obj1.offsetlist[obj1.prevspriteindex].Item1)) {
                     float yb4 = obj1.objectanchor.oldanchor.Y;
@@ -62,14 +63,14 @@ namespace BobbySpel {
                     float xdif2 = xb4 - obj1.objectanchor.anchor.X;
                     float ratioX = xdif / ydif;
                     obj1.objectanchor.anchor.Y += xdif2 / ratioX;             
+
+                    obj1.isFalling = true;
                 }
                 else {
                     System.Diagnostics.Debug.WriteLine("?????????????");
-                }
+                }              
             }
-
-
-
+            
 
             void ResolveX() {
                 obj1.objectanchor.anchor.X = obj2.objectanchor.anchor.X + ((obj1.objectanchor.oldanchor.X > obj2.objectanchor.anchor.X) ? obj2.currentsprite.Width : -obj1.currentsprite.Width) - obj1.offsetlist[obj1.spritelist.IndexOf(obj1.currentsprite)].Item1;
