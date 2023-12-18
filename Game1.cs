@@ -15,6 +15,7 @@ namespace BobbySpel {
 
         Bobby bobby;
         Block block1;
+        Block block2;
 
         bool drawboxes;
 
@@ -46,7 +47,8 @@ namespace BobbySpel {
 
             pixel = new Texture2D(GraphicsDevice, 1, 1);
             bobby = new Bobby(new Vector2(350, referenceHeight - 75));
-            block1 = new Block(new Vector2(100, 100));
+            block1 = new Block(new Vector2(referenceWidth/2, referenceHeight/2));
+            block2 = new Block(new Vector2((350)-200, referenceHeight - 20));
         }
 
         private void UpdateScale(int currentWidth, int currentHeight, int referenceWidth, int referenceHeight) {
@@ -77,6 +79,7 @@ namespace BobbySpel {
             }
             bobby.Check(kstate);
             Helper.CollisionCheck(bobby, block1);
+            Helper.CollisionCheck(bobby, block2);
             bobby.SyncPos2();
 
 
@@ -127,6 +130,11 @@ namespace BobbySpel {
 
             _spriteBatch.Draw(bobby.currentsprite, bobby.spriteposition, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             _spriteBatch.Draw(block1.currentsprite, block1.spriteposition, Color.White);
+            _spriteBatch.Draw(block2.currentsprite, block2.spriteposition, Color.White);
+
+            _spriteBatch.DrawString(Content.Load<SpriteFont>("MYFONT"), $"{bobby.objectanchor.anchor.X-bobby.objectanchor.oldanchor.X}\n{bobby.objectanchor.anchor.Y - bobby.objectanchor.oldanchor.Y}", new Vector2(0, 0), Color.White);
+            _spriteBatch.DrawString(Content.Load<SpriteFont>("MYFONT"), "|", new Vector2(bobby.objecthitbox.hitbox.X+ bobby.currentsprite.Width, 0), Color.Green);
+            _spriteBatch.DrawString(Content.Load<SpriteFont>("MYFONT"), "|", new Vector2(block1.objecthitbox.hitbox.X, 0), Color.Red);
             _spriteBatch.End();
 
             if (drawboxes) {

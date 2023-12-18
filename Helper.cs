@@ -16,7 +16,6 @@ namespace BobbySpel {
 
 
 
-
         public static void CollisionCheck(DynamicCollidableObject obj1, CollidableObject obj2) {
             if (obj1.objecthitbox.hitbox.Intersects(obj2.objecthitbox.hitbox)) {
                 Rectangle intersection = Rectangle.Intersect(obj1.objecthitbox.hitbox, obj2.objecthitbox.hitbox);
@@ -25,27 +24,60 @@ namespace BobbySpel {
                 // om färdriktning är åt höger är xdif +
                 float ydif = obj1.objectanchor.anchor.Y - obj1.objectanchor.oldanchor.Y;
                 // om färdriktning är nedåt är ydif +
+
+                // LÖS DENNA
                 if (ydif == 0 && xdif == 0) {
-                    obj1.objectanchor.anchor.X += intersection.X;
-                    obj1.objectanchor.anchor.Y += intersection.Y;
+                    
                 }
+                //Fall / Hopp
                 else if (xdif == 0) {
-                    obj1.objectanchor.anchor.Y += intersection.Height * -Sign(ydif);
+                    ResolveY();
                     if (Sign(ydif) == 1) {
                         obj1.isFalling = false;
                     }
                 }
+                // Spring
                 else if (ydif == 0) {
-                    obj1.objectanchor.anchor.X += intersection.Width * -Sign(xdif);
+                    ResolveX();
                 }
-                else if (obj1.objectanchor.anchor.X <= obj2.objectanchor.anchor.X + obj2.objecthitbox.hitbox.Width && obj2.objectanchor.anchor.X <= obj1.objectanchor.anchor.X + obj1.objecthitbox.hitbox.Width) {
-                    if (obj1.objectanchor.anchor.Y <= obj2.objectanchor.anchor.Y) {
-                        obj1.objectanchor.anchor.Y;
+
+                // left1 < right2 && left2 < right1
+                else if (obj1.objectanchor.oldanchor.X + obj1.offsetlist[obj1.prevspriteindex].Item1 < obj2.objectanchor.anchor.X + obj2.objecthitbox.hitbox.Width && 
+                    obj2.objectanchor.anchor.X < obj1.objectanchor.oldanchor.X + obj1.objecthitbox.hitbox.Width + (obj1.offsetlist[obj1.spritelist.IndexOf(obj1.currentsprite)].Item1 - obj1.offsetlist[obj1.prevspriteindex].Item1)) {
+                    float yb4 = obj1.objectanchor.oldanchor.Y;
+                    ResolveY();
+                    float ydif2 = yb4 - obj1.objectanchor.anchor.Y;
+                    float ratioY = ydif / xdif;
+                    obj1.objectanchor.anchor.X += ydif2 / ratioY;
+                    
+                    if (Sign(ydif) == 1) {
+                        obj1.isFalling = false;
                     }
+                }
+
+                else if (obj1.objectanchor.oldanchor.Y + obj1.offsetlist[obj1.prevspriteindex].Item2 < obj2.objectanchor.anchor.Y + obj2.objecthitbox.hitbox.Height && 
+                    obj2.objectanchor.anchor.Y < obj1.objectanchor.oldanchor.Y + obj1.objecthitbox.hitbox.Height) {
+                    float xb4 = obj1.objectanchor.oldanchor.X;
+                    ResolveX();
+                    float xdif2 = xb4 - obj1.objectanchor.anchor.X;
+                    float ratioX = xdif / ydif;
+                    obj1.objectanchor.anchor.Y += xdif2 / ratioX;             
+                }
+                else {
+                    System.Diagnostics.Debug.WriteLine("?????????????");
                 }
             }
 
 
+
+
+            void ResolveX() {
+                obj1.objectanchor.anchor.X = obj2.objectanchor.anchor.X + ((obj1.objectanchor.oldanchor.X > obj2.objectanchor.anchor.X) ? obj2.currentsprite.Width : -obj1.currentsprite.Width) - obj1.offsetlist[obj1.spritelist.IndexOf(obj1.currentsprite)].Item1;
+            }
+            void ResolveY() {
+                obj1.objectanchor.anchor.Y = obj2.objectanchor.anchor.Y + ((obj1.objectanchor.oldanchor.Y > obj2.objectanchor.anchor.Y) ? obj2.currentsprite.Height : -obj1.currentsprite.Height) - obj1.offsetlist[obj1.spritelist.IndexOf(obj1.currentsprite)].Item2;
+            }
+     
             static int Sign(float f) {
                 return (f > 0) ? 1 : -1;
             }

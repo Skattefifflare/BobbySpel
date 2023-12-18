@@ -13,6 +13,7 @@ using System.Runtime.CompilerServices;
 
 namespace BobbySpel {
     internal class Bobby : DynamicCollidableObject {
+        
 
         public Bobby(Vector2 Aanchorposition) {
 
@@ -41,23 +42,27 @@ namespace BobbySpel {
             };
 
             mass = 70;
-            speed = 280f;
-            isFalling = false;
+            speed = 100f;
+            // 280
+            isFalling = true;
             fallingspeed = 0;
 
             SyncPos2();
+
+            
         }
 
         public void Check(KeyboardState Akstate) {
 
             objectanchor.oldanchor = objectanchor.anchor;
+            prevspriteindex = spritelist.IndexOf(currentsprite);
 
             if (Akstate.GetPressedKeys().Length == 0 || (Akstate.IsKeyDown(Keys.A) && Akstate.IsKeyDown(Keys.D))) {
                 if (spritelist.IndexOf(currentsprite) != 0) {
                     currentsprite = spritelist[0];
                     ResetSpriteTimer();
                 }
-            }
+            }          
             else {
                 if (Akstate.IsKeyDown(Keys.A)) {
                     CycleSprites(0.2f, 2, 3);
@@ -84,6 +89,9 @@ namespace BobbySpel {
         }
         public void Run(float Aspeed) {
             objectanchor.anchor.X += Aspeed * Helper.time;
+        }
+        public void Jump() {
+
         }
 
     }

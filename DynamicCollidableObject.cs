@@ -14,8 +14,8 @@ namespace BobbySpel {
         public float fallingspeed;
 
 
-
-
+        public int prevspriteindex;
+        // OTROLIGT DUM VARIABEL
 
     }
 }
