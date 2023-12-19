@@ -13,6 +13,8 @@ namespace BobbySpel {
         public bool isFalling;
         public float fallingspeed;
 
+        public bool isJumping;
+        public float jumpingspeed;
 
         public int prevspriteindex;
         // OTROLIGT DUM VARIABEL

@@ -14,8 +14,8 @@ using System.Runtime.CompilerServices;
 namespace BobbySpel {
     internal class Bobby : DynamicCollidableObject {
 
-        public bool isJumping;
-        public float jumpingspeed;
+        
+        
         public Bobby(Vector2 Aanchorposition) {
 
 
@@ -74,6 +74,9 @@ namespace BobbySpel {
                     CycleSprites(0.2f, 4, 5);
                     Run(speed);
                 }
+                if(Akstate.IsKeyDown(Keys.Space)) {
+                    isJumping = true;
+                }
                 /*
                 if (Akstate.IsKeyDown(Keys.W)) {
                     objectanchor.anchor.Y -= speed * Helper.time;
@@ -85,11 +88,15 @@ namespace BobbySpel {
                 }
                 */
             }
+            if(isJumping) {
+                Jump();
+                isFalling = true;
+            }
 
             if (isFalling) {
                 Fall();
             }
-            else {
+            else if (!isFalling) {
                 fallingspeed = 0;
                 isJumping = false;
             }
@@ -103,8 +110,7 @@ namespace BobbySpel {
             objectanchor.anchor.Y -= jumpingspeed * Helper.time;
         }
         public void Fall() {
-
-            fallingspeed += ((fallingspeed < 1000) ? 500 : 0 ) * Helper.time;
+            fallingspeed += ((fallingspeed < 1000) ? 800 : 0 ) * Helper.time;
             objectanchor.anchor.Y += fallingspeed * Helper.time;
         }
 

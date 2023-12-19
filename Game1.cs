@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Serialization;
 
 namespace BobbySpel {
     public class Game1 : Game {
@@ -41,7 +43,7 @@ namespace BobbySpel {
             int referenceHeight = 108 * 3;
             _graphics.PreferredBackBufferWidth = 192 * 6;
             _graphics.PreferredBackBufferHeight = 108 * 6;
-            // _graphics.IsFullScreen = true;
+            _graphics.IsFullScreen = true;
             _graphics.ApplyChanges();
             UpdateScale(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, referenceWidth, referenceHeight);
 
@@ -50,7 +52,7 @@ namespace BobbySpel {
             bobby = new Bobby(new Vector2(350, 200));
             block1 = new Block(new Vector2(200, 60), "Block.png");
             block2 = new Block(new Vector2(150, referenceHeight-100), "Block.png");
-            longblock = new Block(new Vector2(0, referenceHeight - 20), "LongBlock.png");
+            longblock = new Block(new Vector2(-450, referenceHeight - 20), "LongBlock.png");
             
         }
 
@@ -84,9 +86,12 @@ namespace BobbySpel {
                 bobby.isFalling = true;
             }
             bobby.Check(kstate);
+
+            
+            
             Helper.CollisionCheck(bobby, block1);
             Helper.CollisionCheck(bobby, block2);
-            Helper.CollisionCheck(bobby, longblock);
+            Helper.CollisionCheck(bobby, longblock);           
             bobby.SyncPos2();
 
 
@@ -141,6 +146,7 @@ namespace BobbySpel {
             _spriteBatch.Draw(longblock.currentsprite, longblock.spriteposition, Color.White);
 
             _spriteBatch.DrawString(Content.Load<SpriteFont>("MYFONT"), $"{bobby.objectanchor.anchor.X-bobby.objectanchor.oldanchor.X}\n{bobby.objectanchor.anchor.Y - bobby.objectanchor.oldanchor.Y}", new Vector2(0, 0), Color.White);
+            _spriteBatch.DrawString(Content.Load<SpriteFont>("MYFONT"), $"{bobby.isFalling} {bobby.isJumping}", new Vector2(0, 30), Color.White);
             _spriteBatch.End();
 
             if (drawboxes) {
