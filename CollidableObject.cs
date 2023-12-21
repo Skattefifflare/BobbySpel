@@ -9,15 +9,14 @@ using System.Threading.Tasks;
 
 namespace BobbySpel {
     internal class CollidableObject : SpriteObject {
-        // innehåller hitbox och synkar hitbox med resten
+        // innehåller hitbox och synkar hitbox med spriten
 
-        public Hitbox objecthitbox;
+        public Hitbox ohb;
 
-        public void SyncPos2() {
-            SyncPos1();
-            objecthitbox.UpdateSize(currentsprite.Width, currentsprite.Height);
-            objecthitbox.UpdatePos(spriteposition);
+        public void SyncHitbox() {
+            OffsetSprite();
+            ohb.UpdateSize(currentsprite.Width, currentsprite.Height);
+            ohb.UpdatePos(spriteposition);
         }
-
     }
 }

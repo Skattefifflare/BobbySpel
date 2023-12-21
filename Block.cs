@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
@@ -9,18 +10,18 @@ using System.Threading.Tasks;
 
 namespace BobbySpel {
     internal class Block : CollidableObject {
+        
+        public Block(Vector2 Aanchorposition, string spritefilepath) {
 
-        public Block(Vector2 Aanchorposition, string filepath) {
-            objectanchor = new Anchor(Aanchorposition);
+            oa = new Anchor(Aanchorposition);
 
-            spritelist = new List<Texture2D> { Texture2D.FromFile(graphicsDevice, $"{filepath}") };
+            spritelist = new List<Texture2D> { Texture2D.FromFile(graphicsDevice, $"{spritefilepath}") };
             currentsprite = spritelist[0];
 
             offsetlist = new List<(int, int)> { (0, 0) };
 
-
-            objecthitbox = new Hitbox(Aanchorposition, currentsprite.Width, currentsprite.Height);
-            SyncPos2();
+            ohb = new Hitbox(Aanchorposition, currentsprite.Width, currentsprite.Height);
+            SyncHitbox();
 
         }
     }

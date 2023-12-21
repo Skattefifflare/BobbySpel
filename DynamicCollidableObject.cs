@@ -13,9 +13,12 @@ namespace BobbySpel {
         public bool isFalling;
         public float fallingspeed;
 
-
-        public int prevspriteindex;
         // OTROLIGT DUM VARIABEL
+        public int prevspriteindex;
 
+        public void UpdatePos() {
+            oa.oldX = oa.X;
+            oa.oldY = oa.Y;
+        }
     }
 }

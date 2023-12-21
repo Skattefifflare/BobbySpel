@@ -4,23 +4,28 @@ using Microsoft.Xna.Framework;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace BobbySpel {
     internal class Anchor {
+               
+        public float X;
+        public float Y;
 
-        public Vector2 anchor;
-        public Vector2 oldanchor;
+        public float oldX;
+        public float oldY;
 
         public Anchor(Vector2 Aposition) {
-            anchor = Aposition;
+            X = Aposition.X;
+            Y = Aposition.Y;
         }
-        public void UpdateAnchor(int Ax, int Ay) {
-            anchor.X = Ax;
-            anchor.Y = Ay;
+        public void UpdateAnchor(Vector2 Aposition) {
+            X = Aposition.X;
+            Y = Aposition.Y;
         }
-        public void UpdateOldAnchor(int Ax, int Ay) {
-            oldanchor.X = Ax;
-            oldanchor.Y = Ay;
+        public void UpdateOldAnchor(Vector2 Aposition) {
+            oldX = Aposition.X;
+            oldY = Aposition.Y;
         }
     }
 }

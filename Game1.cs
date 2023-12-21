@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using Color = Microsoft.Xna.Framework.Color;
 
 namespace BobbySpel {
     public class Game1 : Game {
@@ -27,7 +28,7 @@ namespace BobbySpel {
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
-
+        
         protected override void Initialize() {
 
             gd = GraphicsDevice;
@@ -75,10 +76,11 @@ namespace BobbySpel {
                 drawboxes = false;
             }
             if (kstate.IsKeyDown(Keys.Z)) {
-                bobby.objectanchor.anchor = new Vector2(350, 200);
+                bobby.oa.X = 350;
+                bobby.oa.X = 200;
             }
             if (kstate.IsKeyDown(Keys.T)) {
-                System.Diagnostics.Debug.WriteLine(bobby.objectanchor.anchor);
+                System.Diagnostics.Debug.WriteLine(bobby.oa.X + " : " + bobby.oa.Y);
             }
             if (kstate.IsKeyDown (Keys.F)) {
                 bobby.isFalling = true;
@@ -87,7 +89,7 @@ namespace BobbySpel {
             Helper.CollisionCheck(bobby, block1);
             Helper.CollisionCheck(bobby, block2);
             Helper.CollisionCheck(bobby, longblock);
-            bobby.SyncPos2();
+            bobby.SyncHitbox();
 
 
             base.Update(gameTime);
@@ -140,11 +142,11 @@ namespace BobbySpel {
             _spriteBatch.Draw(block1.currentsprite, block1.spriteposition, Color.White);
             _spriteBatch.Draw(longblock.currentsprite, longblock.spriteposition, Color.White);
 
-            _spriteBatch.DrawString(Content.Load<SpriteFont>("MYFONT"), $"{bobby.objectanchor.anchor.X-bobby.objectanchor.oldanchor.X}\n{bobby.objectanchor.anchor.Y - bobby.objectanchor.oldanchor.Y}", new Vector2(0, 0), Color.White);
+            _spriteBatch.DrawString(Content.Load<SpriteFont>("MYFONT"), $"{bobby.oa.X - bobby.oa.oldX}\n{bobby.oa.Y - bobby.oa.oldY}", new Vector2(0, 0), Color.White);
             _spriteBatch.End();
 
             if (drawboxes) {
-                DrawRectangle(bobby.objecthitbox.hitbox, Color.White);
+                DrawRectangle(bobby.ohb.hitbox, Color.White);
             }
 
 

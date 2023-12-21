@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Drawing;
 using Microsoft.Xna.Framework.Content;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace BobbySpel {
         public Bobby(Vector2 Aanchorposition) {
 
 
-            objectanchor = new Anchor(Aanchorposition);
+            oa = new Anchor(Aanchorposition);
 
             spritelist = new List<Texture2D> {
                 Texture2D.FromFile(graphicsDevice, "BobbyIdle.png"),
@@ -31,7 +32,7 @@ namespace BobbySpel {
             };
             currentsprite = spritelist[0];
 
-            objecthitbox = new Hitbox(Aanchorposition, 0, 0);
+            ohb = new Hitbox(Aanchorposition, 0, 0);
 
             offsetlist = new List<(int, int)> {
                 (7, 4),
@@ -48,14 +49,12 @@ namespace BobbySpel {
             fallingspeed = 0;
             jumpingspeed = 450;
 
-            SyncPos2();
-
-            
+            SyncHitbox();          
         }
 
         public void Check(KeyboardState Akstate) {
 
-            objectanchor.oldanchor = objectanchor.anchor;
+            UpdatePos();
             prevspriteindex = spritelist.IndexOf(currentsprite);
 
             if (Akstate.GetPressedKeys().Length == 0 || (Akstate.IsKeyDown(Keys.A) && Akstate.IsKeyDown(Keys.D))) {
@@ -74,14 +73,15 @@ namespace BobbySpel {
                     CycleSprites(0.2f, 4, 5);
                     Run(speed);
                 }
+                if (Akstate.IsKeyDown(Keys.Space)) {
+                    isJumping = true;
+                }
                 /*
                 if (Akstate.IsKeyDown(Keys.W)) {
-                    objectanchor.anchor.Y -= speed * Helper.time;
-
+                    oa.Y -= speed * Helper.time;
                 }
                 if (Akstate.IsKeyDown(Keys.S)) {
-                    objectanchor.anchor.Y += speed * Helper.time;
-
+                    oa.Y += speed * Helper.time;
                 }
                 */
             }
@@ -94,19 +94,20 @@ namespace BobbySpel {
                 isJumping = false;
             }
 
-            SyncPos2();
+            SyncHitbox();
         }
         public void Run(float Aspeed) {
-            objectanchor.anchor.X += Aspeed * Helper.time;
+            oa.X += Aspeed * Helper.time;
         }
         public void Jump() {
-            objectanchor.anchor.Y -= jumpingspeed * Helper.time;
+            oa.Y -= jumpingspeed * Helper.time;
         }
         public void Fall() {
 
             fallingspeed += ((fallingspeed < 1000) ? 500 : 0 ) * Helper.time;
-            objectanchor.anchor.Y += fallingspeed * Helper.time;
+            oa.Y += fallingspeed * Helper.time;
         }
+        
 
     }
 }
