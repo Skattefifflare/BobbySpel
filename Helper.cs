@@ -40,7 +40,7 @@ namespace BobbySpel {
                 // Spring
                 else if (ydif == 0) {
                     ResolveX();
-                    obj1.isFalling = true;
+                    DoFall();
                 }               
                 else if (obj1.oa.oldX + obj1.offsetlist[obj1.prevspriteindex].Item1 < obj2.oa.X + obj2.ohb.hitbox.Width && 
                     obj2.oa.X < obj1.oa.oldX + obj1.ohb.hitbox.Width + (obj1.offsetlist[obj1.spritelist.IndexOf(obj1.currentsprite)].Item1 - obj1.offsetlist[obj1.prevspriteindex].Item1)) {
@@ -60,9 +60,9 @@ namespace BobbySpel {
                     ResolveX();
                     float xdif2 = xb4 - obj1.oa.X;
                     float ratioX = xdif / ydif;
-                    obj1.oa.Y += xdif2 / ratioX;             
+                    obj1.oa.Y += xdif2 / ratioX;
 
-                    obj1.isFalling = true;
+                    DoFall();
                 }
                 else {
                     System.Diagnostics.Debug.WriteLine("?????????????");
@@ -78,6 +78,11 @@ namespace BobbySpel {
             }    
             static int Sign(float f) {
                 return (f > 0) ? 1 : -1;
+            }
+            void DoFall() {
+                if (obj1.isFalling) { 
+                    obj1.isFalling = false;
+                }
             }
         }
 

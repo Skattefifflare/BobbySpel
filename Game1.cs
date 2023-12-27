@@ -85,6 +85,10 @@ namespace BobbySpel {
             if (kstate.IsKeyDown (Keys.F)) {
                 bobby.isFalling = true;
             }
+
+
+            // SKA INTE HA OLIKA STORLEKAR PÅ BOBBYS SPRITES
+
             bobby.Check(kstate);
             Helper.CollisionCheck(bobby, block1);
             Helper.CollisionCheck(bobby, block2);

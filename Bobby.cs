@@ -76,18 +76,18 @@ namespace BobbySpel {
                 if (Akstate.IsKeyDown(Keys.Space)) {
                     isJumping = true;
                 }
-                /*
+                
                 if (Akstate.IsKeyDown(Keys.W)) {
                     oa.Y -= speed * Helper.time;
                 }
                 if (Akstate.IsKeyDown(Keys.S)) {
                     oa.Y += speed * Helper.time;
                 }
-                */
+                
             }
 
             if (isFalling) {
-                Fall();
+                // Fall();
             }
             else {
                 fallingspeed = 0;
